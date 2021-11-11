@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
         title: "IE_GPA_Calculator",
         theme: ThemeData(
             primarySwatch: Colors.blue,
+            primaryColor: Colors.blue.shade900,
             accentColor: Colors.white,
             canvasColor: Color.fromRGBO(238, 238, 238, 1),
             fontFamily: "RobotoCondensed",
@@ -61,7 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("homepage")),
+      appBar: AppBar(
+        title: Text("homepage"),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: Center(child: Text("Good things coming")),
     );
   }
