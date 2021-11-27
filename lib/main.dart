@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '/semesters_summary_page.dart';
+import 'package:ie_gpa_calculator/screens/gpa_summary_screen.dart';
+import 'package:ie_gpa_calculator/screens/subjects_detail_screen.dart';
+import '/screens/splash_screen.dart';
+import 'screens/semesters_summary_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,12 +23,13 @@ class MyApp extends StatelessWidget {
             fontFamily: "RobotoCondensed",
             errorColor: Colors.red,
             textTheme: ThemeData.light().textTheme.copyWith(
-                bodyText1: TextStyle(color: Colors.white), //titles
-                bodyText2: TextStyle(color: Colors.black38), //subtitles
-                headline6: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "RobotoCondensed",
-                    fontWeight: FontWeight.bold))),
+                  bodyText1: TextStyle(color: Colors.white), //titles
+                  bodyText2: TextStyle(color: Colors.black38), //subtitles
+                  headline6: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "RobotoCondensed",
+                      fontWeight: FontWeight.bold),
+                )),
         // theme: ThemeData(
         //     primaryColor: Color.fromRGBO(23, 8, 109, 0),
         //     accentColor: Colors.white,
@@ -46,14 +52,20 @@ class MyApp extends StatelessWidget {
         //               fontSize: 14,
         //               color: Colors.black),
         //         )),
-        home: MyHomePage(),
+        home: GpaSummaryScreen(),
         routes: {
-          SemestersSummaryPage.routeName: (context) => SemestersSummaryPage()
+          // SplashScreen.routeName: (context) => SplashScreen(),
+          SemestersSummaryScreen.routeName: (context) =>
+              SemestersSummaryScreen(),
+          // MyHomePage.routeName: (context) => MyHomePage(),
+          GpaSummaryScreen.routeName: (context) => GpaSummaryScreen(),
+          SubjectsDetailScreen.routeName: (context) => SubjectsDetailScreen()
         });
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  static const routeName = "/home-page";
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
