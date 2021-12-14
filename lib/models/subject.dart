@@ -1,20 +1,17 @@
+import 'package:flutter/foundation.dart';
+
 class Subject {
   final String abbreviation;
-  final String title;
-  final double weighting;
+  late double weighting;
   final int creditPoints;
-  final double gradeHaw;
-  final double gradeDe;
-  final double gradeUS;
+  late double gradeHaw;
+  late double gradeDe;
+  late double gradeUS;
 
   Subject(
-      {required this.abbreviation,
-      required this.title,
-      required this.weighting,
-      required this.gradeHaw,
-      required this.creditPoints,
-      required this.gradeDe,
-      required this.gradeUS});
+    @required this.abbreviation,
+    @required this.creditPoints,
+  );
 
   static const List<String> subjects = [
     "EE1",
@@ -63,6 +60,6 @@ class Subject {
     '12',
     '13',
     '14',
-    '15'
+    '15',
   ];
 }
