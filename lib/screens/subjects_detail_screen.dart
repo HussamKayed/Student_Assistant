@@ -11,9 +11,12 @@ class SubjectsDetailScreen extends StatelessWidget {
         title: Text(
           "Subjects Summary",
         ),
+        foregroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
         backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
+      extendBodyBehindAppBar: true,
     );
   }
 }

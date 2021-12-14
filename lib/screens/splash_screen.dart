@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../main.dart';
+import 'package:ie_gpa_calculator/screens/semesters_summary_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     super.initState();
     Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, MyHomePage.routeName);
+      Navigator.pushReplacementNamed(context, SemestersSummaryScreen.routeName);
     });
   }
 
