@@ -8,7 +8,7 @@ class SubjectsDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Subjects Summary",
         ),
         foregroundColor: Theme.of(context).primaryColor,
@@ -16,7 +16,19 @@ class SubjectsDetailScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
+            Text("Completed Subjects",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline6),
+          ],
+        ),
+      ),
     );
   }
 }

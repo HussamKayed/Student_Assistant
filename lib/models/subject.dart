@@ -1,17 +1,33 @@
-import 'package:flutter/foundation.dart';
+// To parse this JSON data, do
+//
+//     final transcript = transcriptFromJson(jsonString);
+
+import 'dart:convert';
+import 'transcript.dart';
+
+Transcript transcriptFromJson(String str) =>
+    Transcript.fromJson(json.decode(str));
+
+String transcriptToJson(Transcript data) => json.encode(data.toJson());
 
 class Subject {
-  final String abbreviation;
-  late double weighting;
-  final int creditPoints;
-  late double gradeHaw;
-  late double gradeDe;
-  late double gradeUS;
+  Subject(this.abbreviation, this.hawGrade);
 
-  Subject(
-    @required this.abbreviation,
-    @required this.creditPoints,
-  );
+  final String abbreviation;
+  final int hawGrade;
+  late int semester = 0;
+
+  factory Subject.fromJson(Map<String, dynamic> json) => Subject(
+        json["abbreviation"],
+        json["haw_grade"],
+        // json["semester"]
+      );
+
+  Map<String, dynamic> toJson() => {
+        "abbreviation": abbreviation,
+        "haw_grade": hawGrade
+        // "semester": semester,
+      };
 
   static const List<String> subjects = [
     "EE1",

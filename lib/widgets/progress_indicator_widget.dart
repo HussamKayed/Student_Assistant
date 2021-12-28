@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ie_gpa_calculator/screens/gpa_summary_screen.dart';
-import '../providers/subjects.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ProgressIndicatorWidget extends StatelessWidget {
@@ -15,18 +13,18 @@ class ProgressIndicatorWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () =>
-                Navigator.of(context).pushNamed(GpaSummaryScreen.routeName),
+          child: InkWell(
+            onTap: () => Navigator.of(context)
+                .pushNamed(GpaSummaryScreen.routeName, arguments: semesterId),
             child: CircularPercentIndicator(
               radius: 100,
               lineWidth: 10,
-              percent: 0.8,
+              percent: completionPercentage,
               animation: false,
               fillColor: Theme.of(context).canvasColor,
               progressColor: Theme.of(context).primaryColor,
               center: Text(
-                "$completionPercentage",
+                completionPercentage.toStringAsFixed(2),
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),

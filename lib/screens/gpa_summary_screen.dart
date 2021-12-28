@@ -7,13 +7,36 @@ class GpaSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final semesterNumber = ModalRoute.of(context)?.settings.arguments;
+    final semesterNumber = ModalRoute.of(context)?.settings.arguments as int;
     return Scaffold(
         appBar: AppBar(
-          title: Text('$semesterNumber semester page'),
+          title: Text(getSemester(semesterNumber)),
           centerTitle: true,
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: GpaSummaryWidget());
+  }
+
+  String getSemester(int id) {
+    switch (id) {
+      case 1:
+        return "1st semester";
+      case 2:
+        return "2nd semester";
+      case 3:
+        return "3rd semester";
+      case 4:
+        return "4th semester";
+      case 5:
+        return "5th semester";
+      case 6:
+        return "6th semester";
+      case 7:
+        return "7th semester";
+      case 8:
+        return "Overall Program Progress";
+      default:
+        return "Invalid Semester ID";
+    }
   }
 }
