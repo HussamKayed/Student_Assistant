@@ -40,7 +40,7 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
     final subject = Provider.of<Subjects>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HAW CALCULATOR'),
+        title: const Text('Student Assistant'),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
       ),
