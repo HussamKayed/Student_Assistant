@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ie_gpa_calculator">
    <application
-        android:label="ie_gpa_calculator"
+        android:label="Student Assistant"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

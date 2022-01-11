@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+import '../widgets/subjects_list_widget.dart';
+import '../providers/subjects.dart';
+
 class SubjectsDetailScreen extends StatelessWidget {
   static const String routeName = "/subjects-details-screen";
   const SubjectsDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final subjectProvider = Provider.of<Subjects>(context);
+    final semesterNumber = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -17,15 +23,25 @@ class SubjectsDetailScreen extends StatelessWidget {
         elevation: 0,
       ),
       extendBodyBehindAppBar: false,
-      body: SingleChildScrollView(
+      body: Container(
+        height: MediaQuery.of(context).size.height * 0.7,
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
-            Text("Completed Subjects",
+            const Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Completed Subjects",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline6),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+            ),
+            SubjectsListWidget(semesterNumber)
           ],
         ),
       ),

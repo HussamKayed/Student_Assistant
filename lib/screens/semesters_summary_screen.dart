@@ -31,6 +31,11 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final subject = Provider.of<Subjects>(context);
     return Scaffold(
@@ -59,15 +64,15 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
               children: [
                 ProgressIndicatorWidget(
                     subject.completedSemesterSubjectsNumber[1]! /
-                        subject.subjectsPerSemester,
+                        subject.numberOfSubjectsPerSemester[1]!,
                     1),
                 ProgressIndicatorWidget(
                     subject.completedSemesterSubjectsNumber[2]! /
-                        subject.subjects.length,
+                        subject.numberOfSubjectsPerSemester[2]!,
                     2),
                 ProgressIndicatorWidget(
                     subject.completedSemesterSubjectsNumber[3]! /
-                        subject.subjects.length,
+                        subject.numberOfSubjectsPerSemester[3]!,
                     3),
               ],
             ),
@@ -76,15 +81,15 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
               children: [
                 ProgressIndicatorWidget(
                     subject.completedSemesterSubjectsNumber[4]! /
-                        subject.subjects.length,
+                        subject.numberOfSubjectsPerSemester[4]!,
                     4),
                 ProgressIndicatorWidget(
                     subject.completedSemesterSubjectsNumber[5]! /
-                        subject.subjects.length,
+                        subject.numberOfSubjectsPerSemester[5]!,
                     5),
                 ProgressIndicatorWidget(
                     subject.completedSemesterSubjectsNumber[6]! /
-                        subject.subjects.length,
+                        subject.numberOfSubjectsPerSemester[6]!,
                     6)
               ],
             ),
@@ -93,7 +98,7 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
               children: [
                 ProgressIndicatorWidget(
                     subject.completedSemesterSubjectsNumber[7]! /
-                        subject.subjects.length,
+                        subject.numberOfSubjectsPerSemester[7]!,
                     7)
               ],
             )

@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (ctx) => Subjects(),
       child: MaterialApp(
-          title: "IE_GPA_Calculator",
+          title: "Student Assistant",
           theme: ThemeData(
             primarySwatch: Colors.blue,
             primaryColor: Colors.blue.shade900,

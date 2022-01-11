@@ -7,7 +7,9 @@ import '../models/subject.dart';
 import 'package:http/http.dart' as http;
 
 class Subjects with ChangeNotifier {
-  Map<String, dynamic> completedSubjects = {};
+  bool subjectFound = false;
+  Map<String, dynamic> responseMap = {};
+  Map<Subject, String> completedSubjects = {};
   Map<String, Subject> subjects = {
     "EE1": Subject('EE1', 15),
     "MA1": Subject('MA1', 15),
@@ -45,7 +47,15 @@ class Subjects with ChangeNotifier {
   };
   Map<String, Subject> remainingSubjects = {};
 
-  int subjectsPerSemester = 0;
+  Map<int, int> numberOfSubjectsPerSemester = {
+    1: 5,
+    2: 5,
+    3: 6,
+    4: 5,
+    5: 2,
+    6: 5,
+    7: 3,
+  };
 
   Map<int, int> completedSemesterSubjectsNumber = {
     1: 0,
@@ -62,25 +72,44 @@ class Subjects with ChangeNotifier {
   // }
 
   void getSemesterCompletedSubjects(Map<Subject, String> gradesMap) async {
-    final uri;
-    await filterSubject(gradesMap);
-    Map<String, String> headersMap = {};
-    gradesMap.forEach((subject, grade) {
-      final int key = subject.semester;
-      final int newValue = completedSemesterSubjectsNumber[key]! + 1;
-      completedSemesterSubjectsNumber[key] = newValue;
-      headersMap.addAll({subject.abbreviation: subject.hawGrade.toString()});
-    });
+    if (equals(gradesMap)) {
+      return;
+    } else {
+      final uri;
+      await filterSubject(gradesMap);
+      Map<String, String> currentCompletedSubjects = {};
+      if (completedSubjects.isNotEmpty) {
+        completedSubjects.forEach((key, value) {
+          Map<String, String> temporaryMap = {key.abbreviation: value};
+          currentCompletedSubjects.addAll(temporaryMap);
+        });
+      }
 
-    uri = Uri.https(Endpoints.mainEndpoint, '/transcript', headersMap);
-    completedSubjects = await http.get(uri, headers: {
-      HttpHeaders.contentTypeHeader: 'application/json',
-    }).then((response) {
-      final responseBody = json.decode(response.body);
-      // print(responseBody);
-      return responseBody;
-    });
-    notifyListeners();
+      Map<String, String> queryParametersMap = {};
+
+      gradesMap.forEach((subject, grade) {
+        final int key = subject.semester;
+        final int newValue = completedSemesterSubjectsNumber[key]! + 1;
+        completedSemesterSubjectsNumber[key] = newValue;
+        queryParametersMap
+            .addAll({subject.abbreviation: subject.hawGrade.toString()});
+      });
+
+      completedSubjects.addAll(gradesMap);
+      queryParametersMap.addAll(currentCompletedSubjects);
+
+      uri = Uri.https(Endpoints.mainEndpoint, 'transcript', queryParametersMap);
+      responseMap = await http.get(uri, headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      }).then((response) {
+        final responseBody = json.decode(response.body);
+        return responseBody;
+      });
+      notifyListeners();
+      for (Subject subject in completedSubjects.keys) {
+        print(subject.abbreviation + " " + subject.hawGrade.toString());
+      }
+    }
   }
 
   Future filterSubject(Map<Subject, String> gradesMap) async {
@@ -100,17 +129,28 @@ class Subjects with ChangeNotifier {
     });
   }
 
-  Future getSubjectsNumberPerSemester(String semesterId) async {
-    final int subjectsPerSemester = await http
-        .get(Uri.parse(Endpoints.subjectsDetails + semesterId))
-        .then((response) {
-      return response.body.length;
-    });
-    return subjectsPerSemester;
+  bool equals(Map<Subject, String> gradesMap) {
+    final keys = gradesMap.keys;
+    for (Subject subject in completedSubjects.keys) {
+      for (Subject enteredSubject in keys) {
+        if (subject.abbreviation == enteredSubject.abbreviation) {
+          subjectFound = true;
+          break;
+        } else {
+          subjectFound = false;
+        }
+      }
+      if (subjectFound == true) break;
+    }
+    return subjectFound;
+  }
+
+  void toggleSubjectFound() {
+    subjectFound = !subjectFound;
   }
 
   void addSubject(Map<String, Subject> subject) {
-    completedSubjects.addAll(subject);
+    responseMap.addAll(subject);
     notifyListeners();
   }
 
@@ -125,4 +165,89 @@ class Subjects with ChangeNotifier {
     });
     return subjectsNumber;
   }
+
+  double getUsGpaPerSemester(int semester) {
+    if (responseMap.isEmpty) return 0;
+    final usGpaPerSemester = responseMap['semesters'][semester - 1]['gpa_us'];
+    if (usGpaPerSemester == null) {
+      return 0;
+    } else {
+      return usGpaPerSemester;
+    }
+  }
+
+  double getTotalUsGpa() {
+    if (responseMap.isEmpty) return 0;
+    final totalUsGpa = responseMap['gpa_us'];
+    if (totalUsGpa == null) {
+      return 0;
+    } else {
+      return totalUsGpa;
+    }
+  }
+
+  double getHawGpaPerSemester(int semester) {
+    if (responseMap.isEmpty) return 0;
+    final hawGpaPerSemester = responseMap['semesters'][semester - 1]['gpa_haw'];
+    if (hawGpaPerSemester == null) {
+      return 0;
+    } else {
+      return hawGpaPerSemester;
+    }
+  }
+
+  double getTotalHawGpa() {
+    if (responseMap.isEmpty) return 0;
+    final totalHawGpa = responseMap['gpa_haw'];
+    if (totalHawGpa == null) {
+      return 0;
+    } else {
+      return totalHawGpa;
+    }
+  }
+
+  double getDeGpaPerSemester(int semester) {
+    if (responseMap.isEmpty) return 0;
+    final deGpaPerSemester = responseMap['semesters'][semester - 1]['gpa_de'];
+    if (deGpaPerSemester == null) {
+      return 0;
+    } else {
+      return deGpaPerSemester;
+    }
+  }
+
+  double getTotalDeGpa() {
+    if (responseMap.isEmpty) return 0;
+    final totalDeGpa = responseMap['gpa_de'];
+    if (totalDeGpa == null) {
+      return 0;
+    } else {
+      return totalDeGpa;
+    }
+  }
+
+  int getCpGpaPerSemester(int semester) {
+    if (responseMap.isEmpty) return 0;
+    final cpGpaPerSemester =
+        responseMap['semesters'][semester - 1]['semester_completed_cp'];
+    if (cpGpaPerSemester == null) {
+      return 0;
+    } else {
+      return cpGpaPerSemester;
+    }
+  }
+
+  int getTotalCp() {
+    if (responseMap.isEmpty) return 0;
+    final totalCp = responseMap['semester_completed_cp'];
+    if (totalCp == null) {
+      return 0;
+    } else {
+      return totalCp;
+    }
+  }
+
+  // int numberOfSubjectsPerSemesterMap(int currentSemester) {
+  //   return subjectsNumberPerSemester[currentSemester]!;
+  // }
 }
