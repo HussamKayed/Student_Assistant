@@ -1,16 +1,5 @@
-# ie_gpa_calculator
+# Student Assistant
 
-A new Flutter project.
+Student Assistant is a project which delivers a user-friendly application which can be run on both android and google chrome to help students in Information Engineering in HAW Hamburg to calculate their GPAs in 3 different systems: US System, DE System and HAW System. 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+By creating such application, international students who are already enrolled in the program won't have to worry about conversion formulas when it comes to using their graduation certificates in other countries.
