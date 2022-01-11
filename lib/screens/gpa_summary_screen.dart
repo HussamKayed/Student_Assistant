@@ -5,6 +5,8 @@ import '../widgets/gpa_summary_widget.dart';
 class GpaSummaryScreen extends StatelessWidget {
   static const String routeName = '/gpa-summary-screen';
 
+  const GpaSummaryScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final semesterNumber = ModalRoute.of(context)?.settings.arguments as int;
@@ -14,7 +16,9 @@ class GpaSummaryScreen extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: GpaSummaryWidget());
+        body: GpaSummaryWidget(
+          semesterId: semesterNumber,
+        ));
   }
 
   String getSemester(int id) {
