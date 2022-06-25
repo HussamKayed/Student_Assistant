@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:ie_gpa_calculator/widgets/progress_bar_widget.dart';
-import 'package:ie_gpa_calculator/widgets/progress_indicator_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../widgets/new_subject_widget.dart';
 import '/providers/subjects.dart';
 import '../models/subject.dart';
+import '/widgets/progress_bar_widget.dart';
+import '/widgets/progress_indicator_widget.dart';
 
 class SemestersSummaryScreen extends StatefulWidget {
   static const String routeName = "/semesters-summary-page";
+  static Map<Subject, String> subjectsMap = {};
   static int subjectsNumber = 0;
 
   @override
@@ -23,7 +25,7 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
         return GestureDetector(
           onTap:
               () {}, // hena hayob2a fe async call zabatha (heya elmain get request)
-          child: NewSubject(),
+          child: NewSubject(SemestersSummaryScreen.subjectsMap),
           behavior: HitTestBehavior.opaque,
         );
       },
@@ -46,7 +48,7 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
       ),
       body: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height * 0.9,
         child: Column(
           children: [
             SizedBox(height: 10),
@@ -55,43 +57,53 @@ class _SemestersSummaryScreenState extends State<SemestersSummaryScreen> {
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: ProgressBarWidget(subject.completedSubjectsNumber /
-                        Subject.subjects.length),
+                        Subject.gradedSubjects.length),
                   ),
                 ),
                 height: MediaQuery.of(context).size.height * 0.2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ProgressIndicatorWidget(
-                    subject.completedSemesterSubjectsNumber[1]! /
-                        subject.numberOfSubjectsPerSemester[1]!,
-                    1),
-                ProgressIndicatorWidget(
-                    subject.completedSemesterSubjectsNumber[2]! /
-                        subject.numberOfSubjectsPerSemester[2]!,
-                    2),
-                ProgressIndicatorWidget(
-                    subject.completedSemesterSubjectsNumber[3]! /
-                        subject.numberOfSubjectsPerSemester[3]!,
-                    3),
-              ],
+            Container(
+              height: kIsWeb ? MediaQuery.of(context).size.height * 0.2 : null,
+              child: Row(
+                mainAxisAlignment: kIsWeb
+                    ? MainAxisAlignment.spaceAround
+                    : MainAxisAlignment.spaceBetween,
+                children: [
+                  ProgressIndicatorWidget(
+                      subject.completedSemesterSubjectsNumber[1]! /
+                          subject.numberOfSubjectsPerSemester[1]!,
+                      1),
+                  ProgressIndicatorWidget(
+                      subject.completedSemesterSubjectsNumber[2]! /
+                          subject.numberOfSubjectsPerSemester[2]!,
+                      2),
+                  ProgressIndicatorWidget(
+                      subject.completedSemesterSubjectsNumber[3]! /
+                          subject.numberOfSubjectsPerSemester[3]!,
+                      3),
+                ],
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ProgressIndicatorWidget(
-                    subject.completedSemesterSubjectsNumber[4]! /
-                        subject.numberOfSubjectsPerSemester[4]!,
-                    4),
-                ProgressIndicatorWidget(
-                    subject.completedSemesterSubjectsNumber[5]! /
-                        subject.numberOfSubjectsPerSemester[5]!,
-                    5),
-                ProgressIndicatorWidget(
-                    subject.completedSemesterSubjectsNumber[6]! /
-                        subject.numberOfSubjectsPerSemester[6]!,
-                    6)
-              ],
+            Container(
+              height: kIsWeb ? MediaQuery.of(context).size.height * 0.2 : null,
+              child: Row(
+                mainAxisAlignment: kIsWeb
+                    ? MainAxisAlignment.spaceAround
+                    : MainAxisAlignment.spaceBetween,
+                children: [
+                  ProgressIndicatorWidget(
+                      subject.completedSemesterSubjectsNumber[4]! /
+                          subject.numberOfSubjectsPerSemester[4]!,
+                      4),
+                  ProgressIndicatorWidget(
+                      subject.completedSemesterSubjectsNumber[5]! /
+                          subject.numberOfSubjectsPerSemester[5]!,
+                      5),
+                  ProgressIndicatorWidget(
+                      subject.completedSemesterSubjectsNumber[6]! /
+                          subject.numberOfSubjectsPerSemester[6]!,
+                      6)
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

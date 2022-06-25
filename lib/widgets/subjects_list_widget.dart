@@ -8,7 +8,7 @@ import '../models/subject.dart';
 class SubjectsListWidget extends StatelessWidget {
   final int semesterId;
 
-  SubjectsListWidget(this.semesterId);
+  const SubjectsListWidget(this.semesterId, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,31 +24,37 @@ class SubjectsListWidget extends StatelessWidget {
           return Column(
             children: [
               Slidable(
-                closeOnScroll: true,
-                endActionPane: ActionPane(
-                  motion: ScrollMotion(),
-                  children: [
-                    SlidableAction(
-                      onPressed: (context) {},
-                      icon: Icons.delete,
-                      backgroundColor: Colors.red,
-                    ),
-                    SlidableAction(
-                      onPressed: (context) {},
-                      icon: Icons.edit,
-                      backgroundColor: Colors.amber.shade600,
-                    ),
-                  ],
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.menu_book_rounded),
-                  title: Text(
-                    subjectsList[index].abbreviation,
+                  closeOnScroll: true,
+                  endActionPane: ActionPane(
+                    motion: ScrollMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (context) {},
+                        icon: Icons.delete,
+                        backgroundColor: Colors.red,
+                      ),
+                      SlidableAction(
+                        onPressed: (context) {},
+                        icon: Icons.edit,
+                        backgroundColor: Colors.amber.shade600,
+                      ),
+                    ],
                   ),
-                  subtitle: Text(subjectsList[index].hawGrade.toString()),
-                  trailing: Text(subjectsList[index].hawGrade.toString()),
-                ),
-              ),
+                  child: !checkPassFailSubject(subjectsList[index].abbreviation)
+                      ? ListTile(
+                          leading: Icon(Icons.menu_book_rounded),
+                          title: Text(
+                            subjectsList[index].abbreviation,
+                          ),
+                          subtitle:
+                              Text(subjectsList[index].hawGrade.toString()),
+                        )
+                      : ListTile(
+                          leading: Icon(Icons.menu_book_rounded),
+                          title: Text(
+                            subjectsList[index].abbreviation,
+                          ),
+                        )),
             ],
           );
         },
@@ -67,5 +73,12 @@ class SubjectsListWidget extends StatelessWidget {
       }
     });
     return keysList;
+  }
+
+  bool checkPassFailSubject(String subjectAbbreviation) {
+    for (String subjectName in Subject.passFailSubjects) {
+      if (subjectName == subjectAbbreviation) return true;
+    }
+    return false;
   }
 }

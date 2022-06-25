@@ -72,7 +72,8 @@ class Subjects with ChangeNotifier {
   // }
 
   void getSemesterCompletedSubjects(Map<Subject, String> gradesMap) async {
-    if (equals(gradesMap)) {
+    equals(gradesMap);
+    if (gradesMap.isEmpty) {
       return;
     } else {
       final uri;
@@ -115,34 +116,31 @@ class Subjects with ChangeNotifier {
   Future filterSubject(Map<Subject, String> gradesMap) async {
     var allSubjects = [];
 
-    allSubjects = await http
-        .get(Uri.parse(Endpoints.subjectsDetails))
-        .then((value) => json.decode(value.body)) as List;
-    gradesMap.forEach((subject, grade) {
-      for (var retrievedSubject in allSubjects) {
-        // print(retrievedSubject);
-        if (retrievedSubject['abbreviation'] == subject.abbreviation) {
-          subject.semester = retrievedSubject['semester'];
-          break;
+    allSubjects = await http.get(Uri.parse(Endpoints.subjectsDetails),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json'
+        }).then((value) => json.decode(value.body)) as List;
+    gradesMap.forEach(
+      (subject, grade) {
+        for (var retrievedSubject in allSubjects) {
+          // print(retrievedSubject);
+          if (retrievedSubject['abbreviation'] == subject.abbreviation) {
+            subject.semester = retrievedSubject['semester'];
+            break;
+          }
         }
-      }
-    });
+      },
+    );
   }
 
-  bool equals(Map<Subject, String> gradesMap) {
-    final keys = gradesMap.keys;
-    for (Subject subject in completedSubjects.keys) {
-      for (Subject enteredSubject in keys) {
-        if (subject.abbreviation == enteredSubject.abbreviation) {
-          subjectFound = true;
-          break;
-        } else {
-          subjectFound = false;
+  void equals(Map<Subject, String> gradesMap) {
+    for (var gradesMapKey in gradesMap.keys) {
+      for (var completedSubjectsKey in completedSubjects.keys) {
+        if (gradesMapKey.abbreviation == completedSubjectsKey.abbreviation) {
+          gradesMap.remove(gradesMapKey);
         }
       }
-      if (subjectFound == true) break;
     }
-    return subjectFound;
   }
 
   void toggleSubjectFound() {

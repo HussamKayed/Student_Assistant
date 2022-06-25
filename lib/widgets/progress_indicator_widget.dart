@@ -5,7 +5,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 class ProgressIndicatorWidget extends StatelessWidget {
   final double completionPercentage;
   final int semesterId;
-  ProgressIndicatorWidget(this.completionPercentage, this.semesterId);
+  const ProgressIndicatorWidget(this.completionPercentage, this.semesterId);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ProgressIndicatorWidget extends StatelessWidget {
               fillColor: Theme.of(context).canvasColor,
               progressColor: Theme.of(context).primaryColor,
               center: Text(
-                completionPercentage.toStringAsFixed(2),
+                '${(completionPercentage * 100).toStringAsFixed(1)}%',
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),

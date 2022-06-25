@@ -31,7 +31,7 @@ class SubjectsDetailScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.01,
             ),
             const Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "Completed Subjects",
                 textAlign: TextAlign.center,

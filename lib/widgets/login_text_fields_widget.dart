@@ -14,7 +14,7 @@ class LoginTextFieldsWidget extends StatelessWidget {
       child: Column(
         children: <Widget>[
           buildTextField(emailController, () {}, 'Email', context),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildTextField(passwordController, () {}, 'Password', context)
         ],
       ),

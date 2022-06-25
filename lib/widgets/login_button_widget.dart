@@ -6,7 +6,7 @@ class LoginButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      child: Text("Login"),
+      child: const Text("Login"),
       style: TextButton.styleFrom(
           primary: Colors.white,
           backgroundColor: Theme.of(context).primaryColor),

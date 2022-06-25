@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../screens/subjects_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class GpaSummaryWidget extends StatelessWidget {
     return Card(
       color: Theme.of(ctx).canvasColor,
       elevation: 0,
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -30,8 +31,12 @@ class GpaSummaryWidget extends StatelessWidget {
 
   Widget _buildBoxContainer(BuildContext ctx, double grade) {
     return Container(
-      width: MediaQuery.of(ctx).size.width * 0.25,
-      height: MediaQuery.of(ctx).size.width * 0.25,
+      width: kIsWeb
+          ? MediaQuery.of(ctx).size.width * 0.05
+          : MediaQuery.of(ctx).size.width * 0.25,
+      height: kIsWeb
+          ? MediaQuery.of(ctx).size.width * 0.05
+          : MediaQuery.of(ctx).size.width * 0.25,
       child: Center(
           child:
               Text(grade.toString(), style: Theme.of(ctx).textTheme.headline6)),
@@ -91,9 +96,11 @@ class GpaSummaryWidget extends StatelessWidget {
                     ),
                     Text('US System GPA',
                         style: Theme.of(context).textTheme.headline6),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    !kIsWeb
+                        ? SizedBox(
+                            height: 10,
+                          )
+                        : SizedBox(height: 10.0),
                     Text('HAW System GPA',
                         style: Theme.of(context).textTheme.headline6),
                   ],
